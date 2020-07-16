@@ -1,9 +1,9 @@
 import express, { Application } from "express";
 import socketIO, { Server as SocketIOServer } from "socket.io";
-import { createServer, Server as HTTPServer } from "https";
+import { createServer, Server as HTTPServer } from "http";
 import * as bodyParser from 'body-parser';
 import router from "./src/routers/room-router";
-import { readFileSync } from "fs";
+// import { readFileSync } from "fs";
 import redisClient from "./src/connectors/redis-client";
 var cors = require('cors')
 
@@ -31,13 +31,13 @@ export class Server {
 
     this.app.use('/room', router);
 
-    this.httpServer = createServer({
-      key: readFileSync('./src/security/keytmp.pem'),
-      cert: readFileSync('./src/security/cert.pem'),
-      passphrase: '123456'
-    }, this.app);
+    // this.httpServer = createServer({
+    //   key: readFileSync('./src/security/keytmp.pem'),
+    //   cert: readFileSync('./src/security/cert.pem'),
+    //   passphrase: '123456'
+    // }, this.app);
 
-    // this.httpServer = createServer(this.app);
+     this.httpServer = createServer(this.app);
 
     this.handleSocketConnection();
   }
